@@ -7,20 +7,14 @@ const fs = require('fs');
 
 const breedDetailsFromFile = (breed, callback) => {
   console.log('breedDetailsFromFile: Calling readFile...');
-  fs.readFile(`./data/${breed}.txt`, 'utf8', (error, data) => {
-    // ISSUE: Returning from inner callback function, not our main function.
-    console.log('Callback: I have the data!')
-    if (!error) {
-      //do stuff with data
-      console.log(data);
-    };
-  });
+  fs.readFile(`./data/${breed}.txt`, 'utf8', callback);
   // ISSUE: Attempting to return data out here will also not work.
   //        Currently not returning anything from here, so this function returns undefined.
 }
 
 // we try to get the return value
-breedDetailsFromFile('Bombay', bombay => {
-  console.log('Return Value: ', bombay)
+breedDetailsFromFile('Bombay', (err, bombay) => {
+  if(err) throw err;
+  console.log(bombay);
   // do stuff with our data 
 });
